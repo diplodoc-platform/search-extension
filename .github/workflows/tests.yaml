@@ -1,4 +1,4 @@
-name: OpenAPI tests
+name: Search tests
 
 on:
   pull_request:

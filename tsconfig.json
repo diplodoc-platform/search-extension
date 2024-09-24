@@ -1,6 +1,8 @@
 {
   "extends": "@diplodoc/tsconfig",
   "compilerOptions": {
+    "target": "es2019",
+    "lib": ["es2019"],
     "moduleResolution": "bundler",
     "jsx": "react",
     "declaration": true,

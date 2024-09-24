@@ -1,4 +1,4 @@
-name: OpenAPI code quality
+name: Search code quality
 
 on:
   pull_request:

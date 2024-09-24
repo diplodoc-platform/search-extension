@@ -20,6 +20,7 @@ type ScoreState = {
 type ScoreResult = {
     score: number;
     position: Position;
+    phrase: string;
 };
 
 export type Score = {
@@ -96,7 +97,7 @@ export function phrased(result: Index.Result, terms: string[]) {
 
     function nextScore() {
         const {score, position} = state;
-        results.push({score, position});
+        results.push({score, position, phrase});
 
         state.score = 0;
         state.position = state.curr.position.slice() as Position;
@@ -130,15 +131,22 @@ export function phrased(result: Index.Result, terms: string[]) {
     }
 
     function scoreToken() {
-        if (!state.prev) {
-            state.score += 2;
+        const {prev, curr} = state;
+
+        state.score += 2;
+
+        if (!prev) {
             return nextToken;
         }
 
         // This is partially buggy, if phrase has more that one similar token
-        if (distance(state.prev.position, state.curr.position) <= MERGE_TOLERANCE) {
-            state.score += phrase.includes(state.phrase) ? 10 : 2;
-            state.position[1] = state.curr.position[1];
+        if (distance(prev.position, curr.position) <= MERGE_TOLERANCE) {
+            if (phrase.includes(state.phrase)) {
+                state.score += 10;
+            }
+
+            state.position[1] = curr.position[1];
+
             return nextToken;
         }
 
@@ -146,10 +154,15 @@ export function phrased(result: Index.Result, terms: string[]) {
     }
 
     function scoreWildcard() {
-        if (!state.prev) {
-            state.score += 0.5;
-        } else if (distance(state.prev.position, state.curr.position) <= MERGE_TOLERANCE) {
-            state.score += phrase.includes(state.phrase) ? 1 : 0.5;
+        const {prev, curr} = state;
+
+        state.score += 0.5;
+
+        if (prev && distance(prev.position, curr.position) <= MERGE_TOLERANCE) {
+            if (phrase.includes(state.phrase)) {
+                state.score += 0.5;
+            }
+
             state.position[1] = state.curr.position[1];
         }
 
@@ -157,6 +170,7 @@ export function phrased(result: Index.Result, terms: string[]) {
     }
 
     function end() {
+        results = dedupe(results);
         return null;
     }
 }
@@ -197,4 +211,33 @@ function normalize(result: Index.Result): Record<string, ResultToken[]> {
     }
 
     return fields;
+}
+
+function dedupe(tokens: ScoreResult[]) {
+    if (!tokens.length) {
+        return tokens;
+    }
+
+    let prev = tokens[0];
+    const result = [prev];
+    for (let i = 1; i < tokens.length; i++) {
+        const next = tokens[i] as ScoreResult;
+
+        if (isIntersection(prev.position, next.position)) {
+            result.pop();
+            result.push((prev = withMaxScore(prev, next)));
+        } else {
+            result.push((prev = next));
+        }
+    }
+
+    return result;
+}
+
+function isIntersection(a: Position, b: Position) {
+    return (a[1] >= b[0] && a[1] <= b[1]) || (a[1] >= b[0] && a[1] <= b[1]);
+}
+
+function withMaxScore(a: ScoreResult, b: ScoreResult) {
+    return a.score >= b.score ? a : b;
 }
