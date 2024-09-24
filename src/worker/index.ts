@@ -37,6 +37,7 @@ self.api = {
     async init() {
         config = {
             tolerance: 2,
+            confidence: 'phrased',
             ...self.config,
         } as WorkerConfig;
     },

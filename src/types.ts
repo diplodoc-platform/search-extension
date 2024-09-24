@@ -1,7 +1,13 @@
 import type {ISearchWorkerConfig} from '@diplodoc/client';
 
+enum Confidence {
+    Phrased = 'phrased',
+    Sparsed = 'sparsed',
+}
+
 export interface WorkerConfig extends ISearchWorkerConfig {
     tolerance: number;
+    confidence: Confidence;
     resources: {
         index: string;
         registry: string;

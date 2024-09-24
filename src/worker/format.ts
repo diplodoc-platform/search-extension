@@ -10,11 +10,11 @@ type Trimmer = (text: string, score: Score) => [string, Position[]];
 
 export function format(
     {base, mark}: WorkerConfig,
-    result: SearchResult[],
+    results: SearchResult[],
     registry: Registry,
     trim: Trimmer,
 ): SearchSuggestPageItem[] {
-    return result.map((entry) => {
+    return results.map((entry) => {
         const doc = registry[entry.ref];
         const item = {
             type: 'page',
@@ -41,7 +41,7 @@ export function format(
 }
 
 export function short(text: string, score: Score): [string, Position[]] {
-    const {positions, maxScorePosition: position} = score;
+    const {positions, position} = score;
     const [before, content, after] = split(text, position);
     const head = before.length > SHORT_HEAD ? '...' + before.slice(-SHORT_HEAD) : before;
     const tail = after.slice(0, Math.max(0, MAX_LENGTH - head.length - content.length));

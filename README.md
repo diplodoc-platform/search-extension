@@ -24,3 +24,14 @@ Instance methods:
 ## Worker {#worker}
 
 Implements client search worker interface. Uses prepared in indexer lunr index to resolve search requests.
+
+Extends search score algorithm:
+
+- Adds `tolerance` behavior.
+  `tolerance=0` - only search for strict equal words
+  `tolerance=1` - also search for words with unspecified tail. `word*`
+  `tolerance=2` - also search for words with unspecified tail and head. `*word*`
+
+- Adds `confidence` behavior.
+  `phrased` - default. Additionally scores results by found phrase length
+  `sparsed` - Uses default lunr scoring algorithm.

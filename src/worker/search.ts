@@ -5,7 +5,9 @@ import type {WorkerConfig} from '../types';
 // @ts-ignore
 import {Query, QueryParser} from 'lunr';
 
-import {score} from './score';
+import {INDEX_FIELDS} from '../constants';
+
+import {phrased, sparsed} from './score';
 
 const withIndex = (index: Index) => (builder: Index.QueryBuilder | false) =>
     function withIndex() {
@@ -66,7 +68,7 @@ const makeStrategies = (tolerance: number, index: Index, clauses: FixedClause[],
 export type SearchResult = Index.Result & {scores: Record<string, Score>};
 
 export function search(
-    {tolerance}: WorkerConfig,
+    {tolerance, confidence}: WorkerConfig,
     index: Index,
     query: string,
     count: number,
@@ -78,6 +80,7 @@ export function search(
     const strategies = makeStrategies(tolerance, index, clauses, sealed);
     const refs = new Set<string>();
 
+    const score = confidence === 'sparsed' ? sparsed : phrased;
     const results: SearchResult[] = [];
     while (refs.size < count && strategies.length) {
         const strategy = strategies.shift() as Strategy;
@@ -86,15 +89,16 @@ export function search(
         for (const entry of match) {
             if (!refs.has(entry.ref)) {
                 refs.add(entry.ref);
+
                 results.push({
                     ...entry,
-                    scores: score(terms, entry),
+                    scores: score(entry, terms),
                 });
             }
         }
     }
 
-    return results.slice(0, count);
+    return results.sort(byMaxScore).slice(0, count);
 }
 
 function wildcard(clause: FixedClause, mode: Query.wildcard) {
@@ -110,4 +114,23 @@ function wildcard(clause: FixedClause, mode: Query.wildcard) {
 
     clause.wildcard = mode;
     clause.usePipeline = false;
+}
+
+function byMaxScore(a: SearchResult, b: SearchResult) {
+    const aScore = getMaxScore(a);
+    const bScore = getMaxScore(b);
+
+    return bScore - aScore;
+}
+
+function getMaxScore(result: SearchResult) {
+    let score = 0;
+    for (const [field] of Object.entries(INDEX_FIELDS)) {
+        const scores = result.scores[field];
+        if (scores) {
+            score = Math.max(scores.score, score);
+        }
+    }
+
+    return score;
 }
