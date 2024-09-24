@@ -1,6 +1,5 @@
 import esbuild from 'esbuild';
 import {TsconfigPathsPlugin} from '@esbuild-plugins/tsconfig-paths';
-import {nodeExternalsPlugin} from 'esbuild-node-externals';
 
 const common = {
     tsconfig: './tsconfig.json',
@@ -17,7 +16,6 @@ esbuild.build({
     plugins: [
         // eslint-disable-next-line new-cap
         TsconfigPathsPlugin({tsconfig: './tsconfig.json'}),
-        nodeExternalsPlugin(),
     ],
 });
 
