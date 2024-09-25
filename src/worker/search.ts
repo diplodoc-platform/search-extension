@@ -30,7 +30,7 @@ interface FixedClause extends Query.Clause {
 
 const makeStrategies = (tolerance: number, index: Index, clauses: FixedClause[], sealed: boolean) =>
     [
-        tolerance > -1 &&
+        tolerance >= 0 &&
             function precise(query: Query) {
                 query.clauses = clauses.slice();
 
@@ -42,7 +42,7 @@ const makeStrategies = (tolerance: number, index: Index, clauses: FixedClause[],
                     }
                 }
             },
-        tolerance > 0 &&
+        tolerance >= 1 &&
             function trailingWildcard(query: Query) {
                 query.clauses = clauses.map((clause) => {
                     if (clause.presence !== Query.presence.PROHIBITED) {
@@ -51,7 +51,7 @@ const makeStrategies = (tolerance: number, index: Index, clauses: FixedClause[],
                     return clause;
                 });
             },
-        tolerance > 1 &&
+        tolerance >= 2 &&
             function bothWildcard(query: Query) {
                 query.clauses = clauses.map((clause) => {
                     if (clause.presence !== Query.presence.PROHIBITED) {
@@ -102,14 +102,26 @@ export function search(
 }
 
 function wildcard(clause: FixedClause, mode: Query.wildcard) {
+    const requiredLength =
+        [
+            // eslint-disable-next-line no-bitwise
+            mode & Query.wildcard.TRAILING ? 2 : 0,
+            // eslint-disable-next-line no-bitwise
+            mode & Query.wildcard.LEADING ? 2 : 0,
+        ].reduce((a, b) => a + b, 0) + 1;
+
+    if (clause.term.length < requiredLength) {
+        return;
+    }
+
     // eslint-disable-next-line no-bitwise
     if (mode & Query.wildcard.TRAILING) {
-        clause.term = clause.term + '*';
+        clause.term = clause.term.slice(0, -1) + '*';
     }
 
     // eslint-disable-next-line no-bitwise
     if (mode & Query.wildcard.LEADING) {
-        clause.term = '*' + clause.term;
+        clause.term = '*' + clause.term.slice(1);
     }
 
     clause.wildcard = mode;

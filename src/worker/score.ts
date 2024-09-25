@@ -13,7 +13,7 @@ type ScoreState = {
     score: number;
     prev: ResultToken | null | undefined;
     curr: ResultToken;
-    phrase: string;
+    phrase: string[];
     position: Position;
 };
 
@@ -89,7 +89,7 @@ export function phrased(result: Index.Result, terms: string[]) {
             prev: null,
             curr: token,
             position: token.position.slice() as Position,
-            phrase: token.text,
+            phrase: [token.text],
         };
 
         return match;
@@ -101,7 +101,7 @@ export function phrased(result: Index.Result, terms: string[]) {
 
         state.score = 0;
         state.position = state.curr.position.slice() as Position;
-        state.phrase = state.curr.text;
+        state.phrase = [state.curr.text];
 
         if (!tokens.length) {
             return end;
@@ -117,20 +117,12 @@ export function phrased(result: Index.Result, terms: string[]) {
 
         state.prev = state.curr;
         state.curr = tokens.shift() as ResultToken;
-        state.phrase += ' ' + state.curr.text;
+        state.phrase.push(state.curr.text);
 
         return match;
     }
 
     function match() {
-        if (terms.includes(state.curr.text as string)) {
-            return scoreToken;
-        } else {
-            return scoreWildcard;
-        }
-    }
-
-    function scoreToken() {
         const {prev, curr} = state;
 
         state.score += 2;
@@ -139,31 +131,11 @@ export function phrased(result: Index.Result, terms: string[]) {
             return nextToken;
         }
 
-        // This is partially buggy, if phrase has more that one similar token
-        if (distance(prev.position, curr.position) <= MERGE_TOLERANCE) {
-            if (phrase.includes(state.phrase)) {
-                state.score += 10;
-            }
-
+        if (isPhrase(phrase, state.phrase, distance(prev.position, curr.position))) {
+            state.score += 10;
             state.position[1] = curr.position[1];
 
             return nextToken;
-        }
-
-        return nextScore;
-    }
-
-    function scoreWildcard() {
-        const {prev, curr} = state;
-
-        state.score += 0.5;
-
-        if (prev && distance(prev.position, curr.position) <= MERGE_TOLERANCE) {
-            if (phrase.includes(state.phrase)) {
-                state.score += 0.5;
-            }
-
-            state.position[1] = state.curr.position[1];
         }
 
         return nextScore;
@@ -232,6 +204,27 @@ function dedupe(tokens: ScoreResult[]) {
     }
 
     return result;
+}
+
+function isPhrase(phrase: string, tokens: string[], distance: number) {
+    if (distance > MERGE_TOLERANCE) {
+        return false;
+    }
+
+    tokens = tokens.slice();
+
+    let index = 0;
+    while (tokens.length && index > -1) {
+        const token = tokens.shift() as string;
+
+        index = phrase.indexOf(token, index);
+
+        if (index > -1) {
+            index += token.length;
+        }
+    }
+
+    return index > -1;
 }
 
 function isIntersection(a: Position, b: Position) {
