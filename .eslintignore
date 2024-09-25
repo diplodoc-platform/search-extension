@@ -12,3 +12,6 @@ node_modules
 
 /src/__tests__
 /jest.snapshots.js
+
+/src/indexer/langs/*
+/src/worker/langs/*

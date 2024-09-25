@@ -11,6 +11,7 @@ export interface WorkerConfig extends ISearchWorkerConfig {
     resources: {
         index: string;
         registry: string;
+        language?: string;
     };
 }
 

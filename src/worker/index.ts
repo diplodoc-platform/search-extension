@@ -6,7 +6,7 @@
 import type {Registry, WorkerConfig} from '../types';
 import type {ISearchWorkerApi} from '@diplodoc/client';
 
-import {Index} from 'lunr';
+import lunr, {Builder, Index} from 'lunr';
 
 import {search} from './search';
 import {format, long, short} from './format';
@@ -16,6 +16,7 @@ import {format, long, short} from './format';
 declare const self: ServiceWorkerGlobalScope & {
     config?: WorkerConfig;
     api?: ISearchWorkerApi;
+    language?: (lunr: unknown) => Builder.Plugin;
 };
 
 const NOT_INITIALIZED = {
@@ -73,6 +74,15 @@ async function load(): Promise<[Index, Registry]> {
             request<Index>(`${config.base}/${config.resources.index}`),
             request<Registry>(`${config.base}/${config.resources.registry}`),
         ]);
+
+        if (config.resources.language) {
+            importScripts(`${config.base}/${config.resources.language}`);
+        }
+
+        if (self.language) {
+            self.language(lunr);
+        }
+
         const index = Index.load(indexData);
 
         return [index, registry];

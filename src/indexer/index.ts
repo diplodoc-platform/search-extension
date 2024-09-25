@@ -1,9 +1,10 @@
 import type {DocPageData} from '@diplodoc/components';
 
-import {Builder} from 'lunr';
+import lunr, {Builder} from 'lunr';
 
 import {INDEX_FIELDS} from '../constants';
 
+import {langs} from './langs';
 import {html2text} from './html';
 
 type DocumentInfo = {
@@ -72,6 +73,10 @@ export class Indexer {
 
     private init(lang: string) {
         const index = new Builder();
+
+        if (langs[lang]) {
+            index.use(langs[lang](lunr));
+        }
 
         index.ref('url');
 

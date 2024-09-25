@@ -1,10 +1,4 @@
 node_modules
-/plugin
-/includer
-/runtime
-/index.d.ts
-/types.d.ts
-/types.js
 
 .vscode
 .idea
@@ -17,3 +11,9 @@ node_modules
 /build
 /cache
 /coverage
+
+/src/indexer/langs/*
+!/src/indexer/langs/index.d.ts
+
+/src/worker/langs/*
+!/src/worker/langs/index.d.ts

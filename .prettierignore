@@ -9,3 +9,6 @@ node_modules
 /build
 /cache
 /coverage
+
+/src/indexer/langs/*
+/src/worker/langs/*
