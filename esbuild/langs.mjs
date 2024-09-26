@@ -93,6 +93,8 @@ export async function worker(outdir) {
             self.language = function(lunr: any) {
                 ${attach(lang)}
 
+                lunr.multiLanguage('en', '${lang}');
+
                 return (lunr as unknown as {[lang: string]: Builder.Plugin}).${lang} as Builder.Plugin;
             };
         `;
@@ -135,6 +137,8 @@ function imports(lang) {
         // @ts-ignore
         import stemmer from 'lunr-languages/lunr.stemmer.support';
         // @ts-ignore
+        import multi from 'lunr-languages/lunr.multi';
+        // @ts-ignore
         import lang from 'lunr-languages/lunr.${lang}';
         ${
             ['ja', 'jp'].includes(lang)
@@ -161,5 +165,6 @@ function attach(lang) {
         lang(lunr);
         ${['ja', 'jp'].includes(lang) ? `tinyseg(lunr);` : ''}
         ${['th', 'hi', 'ta', 'sa', 'kn', 'te'].includes(lang) ? `wordcut(lunr);` : ''}
+        multi(lunr);
     `;
 }

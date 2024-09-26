@@ -75,7 +75,9 @@ export class Indexer {
         const index = new Builder();
 
         if (langs[lang]) {
-            index.use(langs[lang](lunr));
+            langs[lang](lunr);
+            // @ts-ignore
+            index.use(lunr.multiLanguage('en', lang));
         }
 
         index.ref('url');
