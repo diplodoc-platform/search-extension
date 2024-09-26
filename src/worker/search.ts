@@ -33,12 +33,18 @@ const makeStrategies = (tolerance: number, index: Index, clauses: FixedClause[],
         tolerance >= 0 &&
             function precise(query: Query) {
                 query.clauses = clauses.slice();
+            },
+        tolerance >= 0 &&
+            function precise(query: Query) {
+                query.clauses = clauses.slice();
 
-                for (let i = query.clauses.length - 1; i >= 0; i--) {
-                    const clause = query.clauses[i] as FixedClause;
-                    if (clause.presence !== Query.presence.PROHIBITED && !sealed) {
-                        wildcard(clause, Query.wildcard.TRAILING);
-                        break;
+                if (!sealed) {
+                    for (let i = query.clauses.length - 1; i >= 0; i--) {
+                        const clause = query.clauses[i] as FixedClause;
+                        if (clause.presence !== Query.presence.PROHIBITED) {
+                            wildcard(clause, Query.wildcard.TRAILING);
+                            break;
+                        }
                     }
                 }
             },
@@ -116,12 +122,12 @@ function wildcard(clause: FixedClause, mode: Query.wildcard) {
 
     // eslint-disable-next-line no-bitwise
     if (mode & Query.wildcard.TRAILING) {
-        clause.term = clause.term.slice(0, -1) + '*';
+        clause.term = clause.term + '*';
     }
 
     // eslint-disable-next-line no-bitwise
     if (mode & Query.wildcard.LEADING) {
-        clause.term = '*' + clause.term.slice(1);
+        clause.term = '*' + clause.term;
     }
 
     clause.wildcard = mode;
