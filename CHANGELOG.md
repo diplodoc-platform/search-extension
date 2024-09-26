@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/diplodoc-platform/search-extension/compare/v1.1.0...v1.1.1) (2024-09-26)
+
+
+### Bug Fixes
+
+* Add multilang index ([9683346](https://github.com/diplodoc-platform/search-extension/commit/9683346b192bfdee3a0ba6c4469a405326b45c48))
+* Fix search tolerance ([1997adb](https://github.com/diplodoc-platform/search-extension/commit/1997adbe1657ec60a7cea5f0e28519c02c7adc14))
+
 ## [1.1.0](https://github.com/diplodoc-platform/search-extension/compare/v1.0.0...v1.1.0) (2024-09-25)
 
 

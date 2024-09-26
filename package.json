@@ -1,6 +1,6 @@
 {
   "name": "@diplodoc/search-extension",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Lunr based offline search extension for Diplodoc platform",
   "main": "./lib/provider/index.js",
   "types": "./lib/indexer/index.d.ts",
