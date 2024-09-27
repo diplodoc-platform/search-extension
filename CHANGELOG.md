@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/diplodoc-platform/search-extension/compare/v1.1.1...v1.1.2) (2024-09-27)
+
+
+### Bug Fixes
+
+* Omit CORS errors - replace fetch with importScripts ([5201148](https://github.com/diplodoc-platform/search-extension/commit/5201148f9a963f52837307245178d88be96a09eb))
+
 ## [1.1.1](https://github.com/diplodoc-platform/search-extension/compare/v1.1.0...v1.1.1) (2024-09-26)
 
 
