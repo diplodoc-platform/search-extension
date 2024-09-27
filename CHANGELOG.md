@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/diplodoc-platform/search-extension/compare/v1.1.2...v1.1.3) (2024-09-27)
+
+
+### Bug Fixes
+
+* Fix index exposing name ([301120d](https://github.com/diplodoc-platform/search-extension/commit/301120df588eef4e8ddcd87e93cf3b0aff27d301))
+
 ## [1.1.2](https://github.com/diplodoc-platform/search-extension/compare/v1.1.1...v1.1.2) (2024-09-27)
 
 
