@@ -17,6 +17,8 @@ declare const self: ServiceWorkerGlobalScope & {
     config?: WorkerConfig;
     api?: ISearchWorkerApi;
     language?: (lunr: unknown) => Builder.Plugin;
+    index: object;
+    registry: Registry;
 };
 
 const NOT_INITIALIZED = {
@@ -70,22 +72,23 @@ async function load(): Promise<[Index, Registry]> {
     }
 
     const promise: Promise<[Index, Registry]> = (async () => {
-        const [indexData, registry] = await Promise.all([
-            request<Index>(`${config.base}/${config.resources.index}`),
-            request<Registry>(`${config.base}/${config.resources.registry}`),
-        ]);
+        const scripts = [
+            `${config.base}/${config.resources.index}`,
+            `${config.base}/${config.resources.registry}`,
+            config.resources.language && `${config.base}/${config.resources.language}`,
+        ].filter(Boolean) as string[];
 
-        if (config.resources.language) {
-            importScripts(`${config.base}/${config.resources.language}`);
+        // Load resources using importScripts instead of fetch
+        // because fetch will produce CORS errors on file:// protocol
+        importScripts(...scripts);
+
+        const {index, registry, language} = self;
+
+        if (language) {
+            language(lunr);
         }
 
-        if (self.language) {
-            self.language(lunr);
-        }
-
-        const index = Index.load(indexData);
-
-        return [index, registry];
+        return [Index.load(index), registry];
     })();
 
     promise.catch((error) => {
@@ -96,10 +99,4 @@ async function load(): Promise<[Index, Registry]> {
     [index, registry] = await promise;
 
     return [index, registry];
-}
-
-async function request<T>(url: string): Promise<T> {
-    const request = await fetch(url);
-
-    return request.json();
 }

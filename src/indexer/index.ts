@@ -65,8 +65,8 @@ export class Indexer {
      * @returns {{index: Index, registry: Registry}}
      */
     release(lang: string) {
-        const index = JSON.stringify(this.indices[lang].build());
-        const registry = JSON.stringify(this.docs[lang]);
+        const index = 'self.indexData=' + JSON.stringify(this.indices[lang].build());
+        const registry = 'self.registry=' + JSON.stringify(this.docs[lang]);
 
         return {index, registry};
     }
