@@ -65,7 +65,7 @@ export async function indexer(outdir) {
         dedent`
             import type {Builder} from 'lunr';
 
-            ${LANGS.map((lang) => `import {${lang}} from './${lang}.js';`).join('\n')}
+            ${LANGS.map((lang) => `import {${lang}} from './${lang}';`).join('\n')}
 
             type Langs = Record<string, {(lunr: any): Builder.Plugin}>;
 
