@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.4](https://github.com/diplodoc-platform/search-extension/compare/v1.1.3...v1.1.4) (2024-09-30)
+
+
+### Bug Fixes
+
+* Fix prebuilt files ([9449e06](https://github.com/diplodoc-platform/search-extension/commit/9449e06f6c04757a4dafad786d462da4d981761a))
+* Fix search clauses generation ([d0abda2](https://github.com/diplodoc-platform/search-extension/commit/d0abda2cb40f94b26f876599dc80ba8e44a845f0))
+* Update deps ([40a3170](https://github.com/diplodoc-platform/search-extension/commit/40a3170f96f49d8e065004dc0f261754da6bce75))
+
 ## [1.1.3](https://github.com/diplodoc-platform/search-extension/compare/v1.1.2...v1.1.3) (2024-09-27)
 
 
