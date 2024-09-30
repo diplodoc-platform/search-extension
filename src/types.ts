@@ -7,7 +7,7 @@ enum Confidence {
 
 export interface WorkerConfig extends ISearchWorkerConfig {
     tolerance: number;
-    confidence: Confidence;
+    confidence: `${Confidence}` | Confidence;
     resources: {
         index: string;
         registry: string;

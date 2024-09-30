@@ -13,6 +13,11 @@ type DocumentInfo = {
     keywords: string[];
 };
 
+export enum ReleaseFormat {
+    JSONP = 'jsonp',
+    RAW = 'raw',
+}
+
 export class Indexer {
     private indices: Record<string, Builder> = {};
 
@@ -34,7 +39,11 @@ export class Indexer {
      *
      * @returns {void}
      */
-    add(lang: string, url: string, data: DocPageData) {
+    add(
+        lang: string,
+        url: string,
+        data: Pick<DocPageData, 'title' | 'html' | 'meta' | 'leading' | 'toc'>,
+    ) {
         if (!this.indices[lang]) {
             this.init(lang);
         }
@@ -61,12 +70,20 @@ export class Indexer {
      * Dumps index and registry for target language.
      *
      * @param lang - index language
+     * @param format - output format
      *
      * @returns {{index: Index, registry: Registry}}
      */
-    release(lang: string) {
-        const index = 'self.index=' + JSON.stringify(this.indices[lang].build());
-        const registry = 'self.registry=' + JSON.stringify(this.docs[lang]);
+    release(lang: string, format = ReleaseFormat.JSONP) {
+        const index = this.indices[lang].build();
+        const registry = this.docs[lang];
+
+        if (format === ReleaseFormat.JSONP) {
+            return {
+                index: 'self.index=' + JSON.stringify(index),
+                registry: 'self.registry=' + JSON.stringify(registry),
+            };
+        }
 
         return {index, registry};
     }

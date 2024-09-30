@@ -9,5 +9,5 @@
     "baseUrl": ".",
     "outDir": "lib"
   },
-  "include": ["src"]
+  "include": ["src", "test"]
 }

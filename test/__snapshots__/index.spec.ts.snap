@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`suggest should match code 1`] = `
+Array [
+  "
+    <a href=\\"./7\\">
+        <div></div>
+        <div><span class=\\"mark\\">crm.stagehistory.list</span></div>
+    </a>
+",
+]
+`;
+
+exports[`suggest should match html content 1`] = `
+Array [
+  "
+    <a href=\\"./1\\">
+        <div></div>
+        <div><span class=\\"mark\\">Lorem ipsum</span> dolor sit amet, consectetur adipiscing elit. Integer sit amet enim velit.</div>
+    </a>
+",
+]
+`;
+
+exports[`suggest should match title content 1`] = `
+Array [
+  "
+    <a href=\\"./3\\">
+        <div><span class=\\"mark\\">Lorem ipsum</span> 1</div>
+        <div>Integer sit amet enim velit. Nam facilisis eget magna non blandit.</div>
+    </a>
+",
+  "
+    <a href=\\"./4\\">
+        <div><span class=\\"mark\\">Lorem ipsum</span> 2</div>
+        <div>Nam facilisis eget magna non blandit. Sed semper, dui ut suscipit semper, nibh justo tempor purus, quis placerat enim dolor vitae neque.</div>
+    </a>
+",
+]
+`;
+
+exports[`suggest should score longest phrase 1`] = `
+Array [
+  "
+    <a href=\\"./6\\">
+        <div></div>
+        <div>...urus, quis placerat <span class=\\"mark\\">enim dolor vitae</span> neque. Vivamus dignissim nunc et tortor vulputate maximus.</div>
+    </a>
+",
+  "
+    <a href=\\"./5\\">
+        <div></div>
+        <div>Lorem ipsum <span class=\\"mark\\">dolor</span> sit amet, consectetur adipiscing elit. Integer sit amet enim velit. Nam facilisis eget magna non blandit.</div>
+    </a>
+",
+]
+`;

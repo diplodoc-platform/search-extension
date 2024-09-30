@@ -9,12 +9,11 @@ import {INDEX_FIELDS} from '../constants';
 
 import {phrased, sparsed} from './score';
 
-const withIndex = (index: Index) => (builder: Index.QueryBuilder | false) =>
-    function withIndex() {
-        if (!builder) {
-            return false;
-        }
+const isStrategy = (candidate: unknown): candidate is Index.QueryBuilder =>
+    typeof candidate === 'function';
 
+const withIndex = (index: Index) => (builder: Index.QueryBuilder) =>
+    function withIndex() {
         return index.query(builder);
     };
 
@@ -32,49 +31,48 @@ const makeStrategies = (tolerance: number, index: Index, clauses: FixedClause[],
     [
         tolerance >= 0 &&
             function precise(query: Query) {
-                query.clauses = clauses.slice();
+                query.clauses = copy(clauses);
             },
         tolerance >= 0 &&
-            function precise(query: Query) {
-                query.clauses = clauses.slice();
+            !sealed &&
+            function preciseUnsealed(query: Query) {
+                query.clauses = copy(clauses);
 
-                if (!sealed) {
-                    for (let i = query.clauses.length - 1; i >= 0; i--) {
-                        const clause = query.clauses[i] as FixedClause;
-                        if (clause.presence !== Query.presence.PROHIBITED) {
-                            wildcard(clause, Query.wildcard.TRAILING);
-                            break;
-                        }
+                for (let i = query.clauses.length - 1; i >= 0; i--) {
+                    const clause = query.clauses[i] as FixedClause;
+                    if (clause.presence !== Query.presence.PROHIBITED) {
+                        query.clauses[i] = wildcard(clause, Query.wildcard.TRAILING);
+                        break;
                     }
                 }
             },
         tolerance >= 1 &&
             function trailingWildcard(query: Query) {
-                query.clauses = clauses.map((clause) => {
+                query.clauses = copy(clauses).map((clause) => {
                     if (clause.presence !== Query.presence.PROHIBITED) {
-                        wildcard(clause, Query.wildcard.TRAILING);
+                        return wildcard(clause, Query.wildcard.TRAILING);
                     }
                     return clause;
                 });
             },
         tolerance >= 2 &&
             function bothWildcard(query: Query) {
-                query.clauses = clauses.map((clause) => {
+                query.clauses = copy(clauses).map((clause) => {
                     if (clause.presence !== Query.presence.PROHIBITED) {
                         // eslint-disable-next-line no-bitwise
-                        wildcard(clause, Query.wildcard.LEADING | Query.wildcard.TRAILING);
+                        return wildcard(clause, Query.wildcard.LEADING | Query.wildcard.TRAILING);
                     }
                     return clause;
                 });
             },
     ]
-        .filter(Boolean)
+        .filter(isStrategy)
         .map(withIndex(index));
 
 export type SearchResult = Index.Result & {scores: Record<string, Score>};
 
 export function search(
-    {tolerance, confidence}: WorkerConfig,
+    {tolerance, confidence}: Pick<WorkerConfig, 'confidence' | 'tolerance'>,
     index: Index,
     query: string,
     count: number,
@@ -108,6 +106,8 @@ export function search(
 }
 
 function wildcard(clause: FixedClause, mode: Query.wildcard) {
+    const result = {...clause};
+
     const requiredLength =
         [
             // eslint-disable-next-line no-bitwise
@@ -116,22 +116,24 @@ function wildcard(clause: FixedClause, mode: Query.wildcard) {
             mode & Query.wildcard.LEADING ? 2 : 0,
         ].reduce((a, b) => a + b, 0) + 1;
 
-    if (clause.term.length < requiredLength) {
-        return;
+    if (result.term.length < requiredLength) {
+        return result;
     }
 
     // eslint-disable-next-line no-bitwise
     if (mode & Query.wildcard.TRAILING) {
-        clause.term = clause.term + '*';
+        result.term = result.term + '*';
     }
 
     // eslint-disable-next-line no-bitwise
     if (mode & Query.wildcard.LEADING) {
-        clause.term = '*' + clause.term;
+        result.term = '*' + result.term;
     }
 
-    clause.wildcard = mode;
-    clause.usePipeline = false;
+    result.wildcard = mode;
+    result.usePipeline = false;
+
+    return result;
 }
 
 function byMaxScore(a: SearchResult, b: SearchResult) {
@@ -151,4 +153,8 @@ function getMaxScore(result: SearchResult) {
     }
 
     return score;
+}
+
+function copy(clauses: FixedClause[]) {
+    return clauses.slice().map((clause) => ({...clause}));
 }
