@@ -9,7 +9,7 @@
     "build:code": "node esbuild/build.mjs && tsc --emitDeclarationOnly",
     "build:clean": "rm -rf lib",
     "prepublishOnly": "npm run build",
-    "test": "jest",
+    "test": "npm run build && jest",
     "typecheck": "tsc --noEmit",
     "lint": "lint update && lint",
     "lint:fix": "lint update && lint fix",
