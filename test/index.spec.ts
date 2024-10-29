@@ -46,7 +46,6 @@ describe('suggest', () => {
             title,
             leading: false,
             meta: {},
-            toc: {items: [], href: ''},
         });
     }
 

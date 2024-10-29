@@ -39,16 +39,12 @@ export class Indexer {
      *
      * @returns {void}
      */
-    add(
-        lang: string,
-        url: string,
-        data: Pick<DocPageData, 'title' | 'html' | 'meta' | 'leading' | 'toc'>,
-    ) {
+    add(lang: string, url: string, data: Pick<DocPageData, 'title' | 'html' | 'meta' | 'leading'>) {
         if (!this.indices[lang]) {
             this.init(lang);
         }
 
-        const {leading, toc, meta = {}} = data;
+        const {leading, title = '', meta = {}} = data;
 
         // @ts-ignore
         if (leading || meta.noindex || meta.noIndex) {
@@ -56,7 +52,6 @@ export class Indexer {
         }
 
         const content = html2text(data.html);
-        const title = meta.title || data.title || toc.title || '';
         const keywords = meta.keywords || [];
 
         this.docs[lang][url] = {title, content, keywords};
