@@ -6,7 +6,7 @@
   "types": "./lib/indexer/index.d.ts",
   "scripts": {
     "build": "npm run build:clean && npm run build:code",
-    "build:code": "node esbuild/build.mjs && tsc --emitDeclarationOnly",
+    "build:code": "node esbuild/build.mjs && tsc --emitDeclarationOnly -p tsconfig.publish.json",
     "build:clean": "rm -rf lib",
     "prepublishOnly": "npm run build",
     "test": "npm run build && jest",
