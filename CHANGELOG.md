@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.5](https://github.com/diplodoc-platform/search-extension/compare/v1.1.4...v1.1.5) (2024-11-01)
+
+
+### Bug Fixes
+
+* Drop data toc usage ([3a6a4ba](https://github.com/diplodoc-platform/search-extension/commit/3a6a4baf45bdaaf6ad1c8d3b0eed040d05cbcc51))
+* Fix types publishing ([963decb](https://github.com/diplodoc-platform/search-extension/commit/963decbf95f245a5d9baf31e3eb6a2cfa45f564b))
+
 ## [1.1.4](https://github.com/diplodoc-platform/search-extension/compare/v1.1.3...v1.1.4) (2024-09-30)
 
 
