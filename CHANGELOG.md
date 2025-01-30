@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/diplodoc-platform/search-extension/compare/v1.1.5...v1.2.0) (2025-01-30)
+
+
+### Features
+
+* Add new exports ([2443fba](https://github.com/diplodoc-platform/search-extension/commit/2443fba30c200eb9acde19d8954c1f108aeefa80))
+
 ## [1.1.5](https://github.com/diplodoc-platform/search-extension/compare/v1.1.4...v1.1.5) (2024-11-01)
 
 
