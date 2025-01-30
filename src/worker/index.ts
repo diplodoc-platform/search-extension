@@ -11,6 +11,8 @@ import lunr, {Builder, Index} from 'lunr';
 import {search} from './search';
 import {format, long, short} from './format';
 
+export {WorkerConfig};
+
 // Default type of `self` is `WorkerGlobalScope & typeof globalThis`
 // https://github.com/microsoft/TypeScript/issues/14877
 declare const self: ServiceWorkerGlobalScope & {

@@ -7,6 +7,8 @@ import {INDEX_FIELDS} from '../constants';
 import {langs} from './langs';
 import {html2text} from './html';
 
+export {html2text};
+
 type DocumentInfo = {
     title: string;
     content: string;
