@@ -18,6 +18,8 @@ const Lorem = [
     'Aenean lobortis ligula a mauris posuere, luctus pretium mauris ultrices.',
 ];
 
+const LongLorem = 'Lorem ipsum dolor '.repeat(100);
+
 const Code = 'crm.stagehistory.list';
 
 const item = ({link, title, description}: SearchSuggestPageItem) => `
@@ -86,5 +88,13 @@ describe('suggest', () => {
         const config = {confidence: 'phrased', tolerance: 2} as const;
 
         expect(suggest('stagehistory', config)).toMatchSnapshot();
+    });
+
+    it('should format very long result', () => {
+        add(LongLorem);
+
+        const config = {confidence: 'phrased', tolerance: 0} as const;
+
+        expect(suggest('Lorem ipsum', config)).toMatchSnapshot();
     });
 });
