@@ -46,7 +46,9 @@ export function short(text: string, score: Score): [string, Position[]] {
     const head = before.length > SHORT_HEAD ? '...' + before.slice(-SHORT_HEAD) : before;
     const tail = after.slice(0, Math.max(0, MAX_LENGTH - head.length - content.length));
 
-    return [head + content + tail, remap(position[0] - head.length, positions)];
+    const result = head + content + tail;
+
+    return [result, remap(position[0] - head.length, positions, result.length)];
 }
 
 export function long(text: string, score: Score): [string, Position[]] {
@@ -77,7 +79,7 @@ export function long(text: string, score: Score): [string, Position[]] {
     result = result.trimStart();
     head -= length - result.length;
 
-    return [result, remap(head, positions)];
+    return [result, remap(head, positions, result.length)];
 
     function prepend() {
         if (befores.length) {
@@ -119,8 +121,8 @@ function split(text: string, position: Position) {
     return [before, content, after];
 }
 
-function remap(dl: number, positions: Position[]): Position[] {
+function remap(dl: number, positions: Position[], length: number): Position[] {
     return positions
         .map(([start, end]) => [start - dl, end - dl])
-        .filter(([start]) => start >= 0) as [number, number][];
+        .filter(([start]) => start >= 0 && start <= length) as [number, number][];
 }

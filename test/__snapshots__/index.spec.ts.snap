@@ -1,5 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`suggest should format very long result 1`] = `
+Array [
+  "
+    <a href=\\"./8\\">
+        <div></div>
+        <div><span class=\\"mark\\">Lorem ipsum</span> dolor <span class=\\"mark\\">Lorem ipsum</span> dolor <span class=\\"mark\\">Lorem ipsum</span> dolor <span class=\\"mark\\">Lorem ipsum</span> dolor <span class=\\"mark\\">Lorem ipsum</span> dolor <span class=\\"mark\\">Lorem ipsum</span> dolor <span class=\\"mark\\">Lorem ipsum</span> dolor <span class=\\"mark\\">Lorem ipsum</span> dolor <span class=\\"mark\\">Lorem ipsum</span> dolor <span class=\\"mark\\">Lorem ipsum</span> dolor <span class=\\"mark\\">Lorem ipsum</span> dolor <span class=\\"mark\\">Lo</span></div>
+    </a>
+",
+]
+`;
+
 exports[`suggest should match code 1`] = `
 Array [
   "
