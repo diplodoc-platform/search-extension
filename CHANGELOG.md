@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/diplodoc-platform/search-extension/compare/v1.2.0...v1.2.1) (2025-02-13)
+
+
+### Bug Fixes
+
+* Remove from result a lot of positions after shortish ([5d4ddd6](https://github.com/diplodoc-platform/search-extension/commit/5d4ddd6a3d176f360509ef8072943f1a97299c38))
+
 ## [1.2.0](https://github.com/diplodoc-platform/search-extension/compare/v1.1.5...v1.2.0) (2025-01-30)
 
 
