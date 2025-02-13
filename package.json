@@ -48,9 +48,5 @@
     "lunr": "^2.3.9",
     "lunr-languages": "^1.14.0",
     "node-html-parser": "^6.1.13"
-  },
-  "peerDependencies": {
-    "@diplodoc/client": "^3.0.2",
-    "@diplodoc/components": "^4.11.2"
   }
 }
