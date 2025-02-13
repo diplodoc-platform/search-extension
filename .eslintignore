@@ -15,3 +15,5 @@ node_modules
 
 /src/indexer/langs/*
 /src/worker/langs/*
+
+/external

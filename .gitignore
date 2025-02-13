@@ -17,3 +17,5 @@ node_modules
 
 /src/worker/langs/*
 !/src/worker/langs/index.d.ts
+
+/external
