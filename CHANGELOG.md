@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/diplodoc-platform/search-extension/compare/v1.2.1...v1.2.2) (2025-02-13)
+
+
+### Dependency update
+
+* Remove useless peer deps ([3fecda6](https://github.com/diplodoc-platform/search-extension/commit/3fecda66b5afdd7b5716074e215c26a60a45440f))
+
 ## [1.2.1](https://github.com/diplodoc-platform/search-extension/compare/v1.2.0...v1.2.1) (2025-02-13)
 
 
