@@ -125,14 +125,14 @@ export function phrased(result: Index.Result, terms: string[]) {
     function match() {
         const {prev, curr} = state;
 
-        state.score += 2;
+        state.score += 2 * curr.boost; // Take into account boost for better score estimation
 
         if (!prev) {
             return nextToken;
         }
 
         if (isPhrase(phrase, state.phrase, distance(prev.position, curr.position))) {
-            state.score += 10;
+            state.score += 10 * curr.boost; // Take into account boost for better score estimation
             state.position[1] = curr.position[1];
 
             return nextToken;
