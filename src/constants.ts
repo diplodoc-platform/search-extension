@@ -1,7 +1,7 @@
 export const MERGE_TOLERANCE = 5;
 
 export const INDEX_FIELDS = {
-    title: 5,
-    keywords: 4,
-    content: 3,
+    title: 10,
+    keywords: 8,
+    content: 1,
 };
