@@ -1,6 +1,6 @@
 import type {ISearchWorkerConfig} from '@diplodoc/client';
 
-enum Confidence {
+export enum Confidence {
     Phrased = 'phrased',
     Sparsed = 'sparsed',
 }
