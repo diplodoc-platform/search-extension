@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.0.0](https://github.com/diplodoc-platform/search-extension/compare/v1.2.2...v2.0.0) (2025-06-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* Update extension structure for CLI v5
+
+### Features
+
+* Update extension structure for CLI v5 ([9b2115e](https://github.com/diplodoc-platform/search-extension/commit/9b2115e1684d6613eec0414a59945cc3f10f9f45))
+
+
+### Bug Fixes
+
+* Update cli ([46c2282](https://github.com/diplodoc-platform/search-extension/commit/46c22829fd6eb005d390262ac092fda55d6a2121))
+
 ## [1.2.2](https://github.com/diplodoc-platform/search-extension/compare/v1.2.1...v1.2.2) (2025-02-13)
 
 
