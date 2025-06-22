@@ -211,7 +211,7 @@ export class LocalSearchProvider implements SearchProvider {
     }
 
     private languageLink(lang: string) {
-        if (!langs.includes(lang)) {
+        if (!langs[lang]) {
             return '';
         }
 
