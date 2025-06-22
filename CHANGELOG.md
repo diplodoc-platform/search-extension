@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/diplodoc-platform/search-extension/compare/v2.0.0...v2.0.1) (2025-06-22)
+
+
+### Bug Fixes
+
+* Fix fatal error in provider ([0f2d29a](https://github.com/diplodoc-platform/search-extension/commit/0f2d29a8108fd5c7a1f52625f684e8373c7901f7))
+
 ## [2.0.0](https://github.com/diplodoc-platform/search-extension/compare/v1.2.2...v2.0.0) (2025-06-11)
 
 
