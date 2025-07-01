@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.2](https://github.com/diplodoc-platform/search-extension/compare/v2.0.1...v2.0.2) (2025-07-01)
+
+
+### Bug Fixes
+
+* Fix search resources saving for threaded build ([512d0c8](https://github.com/diplodoc-platform/search-extension/commit/512d0c8d675d6be6ab4bfbf4ca87fd7525843e71))
+* Remove diplodoc/cli from peer deps ([fa2cdb4](https://github.com/diplodoc-platform/search-extension/commit/fa2cdb4b17abcdee54b7c38c35122a89e5cc318d))
+
 ## [2.0.1](https://github.com/diplodoc-platform/search-extension/compare/v2.0.0...v2.0.1) (2025-06-22)
 
 
