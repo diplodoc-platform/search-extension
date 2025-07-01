@@ -34,9 +34,6 @@
   },
   "author": "",
   "license": "MIT",
-  "peerDependencies": {
-    "@diplodoc/cli": "^5.0.4"
-  },
   "devDependencies": {
     "@diplodoc/cli": "^5.0.4",
     "@diplodoc/client": "^3.0.2",
