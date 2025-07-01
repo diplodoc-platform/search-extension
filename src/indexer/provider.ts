@@ -132,7 +132,7 @@ export class LocalSearchProvider implements SearchProvider {
 
         this.outputDir = '_search';
         this.apiLink = join(this.outputDir, 'api.js');
-        this.nocache = String(Date.now());
+        this.nocache = String(Math.round(global.performance.timeOrigin));
     }
 
     async add(path: string, lang: string, info: EntryInfo) {
@@ -162,13 +162,18 @@ export class LocalSearchProvider implements SearchProvider {
             const resourcesLink = this.resourcesLink(lang);
             const pageLink = this.pageLink(lang);
 
-            await this.run.write(join(this.run.output, indexLink), index as string);
-            await this.run.write(join(this.run.output, registryLink), registry as string);
+            await this.run.write(join(this.run.output, indexLink), index as string, true);
+            await this.run.write(join(this.run.output, registryLink), registry as string, true);
             await this.run.write(
                 join(this.run.output, resourcesLink),
                 this.resources(indexLink, registryLink, languageLink),
+                true,
             );
-            await this.run.write(join(this.run.output, pageLink), await this.run.search.page(lang));
+            await this.run.write(
+                join(this.run.output, pageLink),
+                await this.run.search.page(lang),
+                true,
+            );
 
             if (languageLink) {
                 await this.run.copy(
