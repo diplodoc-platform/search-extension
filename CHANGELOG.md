@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/diplodoc-platform/search-extension/compare/v2.0.2...v2.0.3) (2025-08-11)
+
+
+### Bug Fixes
+
+* update version actions, node 22 ([33bddf5](https://github.com/diplodoc-platform/search-extension/commit/33bddf505031b72201ad0335fdd760b04e46e8e7))
+
 ## [2.0.2](https://github.com/diplodoc-platform/search-extension/compare/v2.0.1...v2.0.2) (2025-07-01)
 
 
