@@ -5,8 +5,9 @@
 /* eslint-disable new-cap */
 import type {Registry, WorkerConfig} from '../types';
 import type {ISearchWorkerApi} from '@diplodoc/client';
+import type {Builder} from 'lunr';
 
-import lunr, {Builder, Index} from 'lunr';
+import lunr, {Index} from 'lunr';
 
 import {search} from './search';
 import {format, long, short} from './format';
@@ -56,11 +57,14 @@ self.api = {
         return format(config, results, registry, short);
     },
 
-    async search(query, count) {
+    async search(query) {
         AssertConfig(config);
 
+        const maxCount = 100;
+
         const [index, registry] = await load();
-        const result = search(config, index, query, count, true);
+
+        const result = search(config, index, query, maxCount, true);
 
         return format(config, result, registry, long);
     },
