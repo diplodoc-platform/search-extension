@@ -112,7 +112,7 @@ export class Indexer {
     }
 }
 
-export class LocalSearchProvider implements SearchProvider {
+export class DefaultSearchProvider implements SearchProvider {
     private run: BuildRun;
 
     private _config: ProviderConfig;
