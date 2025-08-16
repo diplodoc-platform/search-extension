@@ -6,11 +6,12 @@
 import type {Registry, WorkerConfig} from '../types';
 import type {ISearchWorkerApi} from '@diplodoc/client';
 import type {Builder} from 'lunr';
+import type {SearchResult} from './search';
 
 import lunr, {Index} from 'lunr';
 
 import {search} from './search';
-import {format, long, short} from './format';
+import {format, long, paginateResult, short} from './format';
 
 export {WorkerConfig};
 
@@ -29,6 +30,8 @@ const NOT_INITIALIZED = {
     code: 'NOT_INITIALIZED',
 };
 
+const MAX_COUNT_RESULT = 100;
+
 export function AssertConfig(config: unknown): asserts config is WorkerConfig {
     if (!config) {
         throw NOT_INITIALIZED;
@@ -38,6 +41,8 @@ export function AssertConfig(config: unknown): asserts config is WorkerConfig {
 let config: WorkerConfig | null = null;
 let index: Index | null = null;
 let registry: Registry | null = null;
+
+const queryCache: Map<string, SearchResult[]> = new Map();
 
 self.api = {
     async init() {
@@ -57,16 +62,25 @@ self.api = {
         return format(config, results, registry, short);
     },
 
-    async search(query) {
+    async search(query, count, page) {
         AssertConfig(config);
-
-        const maxCount = 100;
 
         const [index, registry] = await load();
 
-        const result = search(config, index, query, maxCount, true);
+        let result = queryCache.get(query) || [];
 
-        return format(config, result, registry, long);
+        if (!queryCache.has(query)) {
+            result = search(config, index, query, MAX_COUNT_RESULT, true);
+
+            queryCache.set(query, result);
+        }
+
+        const {items, total} = paginateResult(result, count, page);
+
+        return {
+            items: format(config, items, registry, long),
+            total,
+        };
     },
 } as ISearchWorkerApi;
 
