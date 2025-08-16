@@ -1,4 +1,4 @@
-import type {IExtension} from '@diplodoc/cli/lib/program';
+import type {BaseProgram, IExtension} from '@diplodoc/cli/lib/program';
 import type {ProviderConfig} from './provider';
 
 import {getBuildHooks, getEntryHooks, getSearchHooks} from '@diplodoc/cli';
