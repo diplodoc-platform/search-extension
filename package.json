@@ -36,7 +36,7 @@
   "license": "MIT",
   "devDependencies": {
     "@diplodoc/cli": "^5.0.4",
-    "@diplodoc/client": "^3.0.2",
+    "@diplodoc/client": "^3.9.0",
     "@diplodoc/components": "^4.13.0",
     "@diplodoc/lint": "^1.1.3",
     "@diplodoc/tsconfig": "^1.0.2",
