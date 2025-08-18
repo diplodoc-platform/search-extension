@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.1.0](https://github.com/diplodoc-platform/search-extension/compare/v2.0.2...v2.1.0) (2025-08-18)
+
+
+### Features
+
+* search logic changed ([cecc485](https://github.com/diplodoc-platform/search-extension/commit/cecc4859150aa297bee125efd38e730273e3c707))
+
+
+### Bug Fixes
+
+* fixed memory leak ([21fe1fc](https://github.com/diplodoc-platform/search-extension/commit/21fe1fcc0f5e6016c73ee7165fcce9b81b0d5f6a))
+* returned BaseProgram ([e65084b](https://github.com/diplodoc-platform/search-extension/commit/e65084bb8346ba6a2771be678b80078753ca3dba))
+* update version actions, node 22 ([33bddf5](https://github.com/diplodoc-platform/search-extension/commit/33bddf505031b72201ad0335fdd760b04e46e8e7))
+* updated client ([2d9bbdf](https://github.com/diplodoc-platform/search-extension/commit/2d9bbdf5fa3d32a3ed759323d7e67a4554ba36bc))
+
 ## [2.0.2](https://github.com/diplodoc-platform/search-extension/compare/v2.0.1...v2.0.2) (2025-07-01)
 
 
