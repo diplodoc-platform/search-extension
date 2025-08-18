@@ -5,11 +5,13 @@
 /* eslint-disable new-cap */
 import type {Registry, WorkerConfig} from '../types';
 import type {ISearchWorkerApi} from '@diplodoc/client';
+import type {Builder} from 'lunr';
+import type {SearchResult} from './search';
 
-import lunr, {Builder, Index} from 'lunr';
+import lunr, {Index} from 'lunr';
 
 import {search} from './search';
-import {format, long, short} from './format';
+import {format, long, paginateResult, short} from './format';
 
 export {WorkerConfig};
 
@@ -28,6 +30,8 @@ const NOT_INITIALIZED = {
     code: 'NOT_INITIALIZED',
 };
 
+const MAX_COUNT_RESULT = 100;
+
 export function AssertConfig(config: unknown): asserts config is WorkerConfig {
     if (!config) {
         throw NOT_INITIALIZED;
@@ -37,6 +41,9 @@ export function AssertConfig(config: unknown): asserts config is WorkerConfig {
 let config: WorkerConfig | null = null;
 let index: Index | null = null;
 let registry: Registry | null = null;
+
+let lastQuery: string | null = null;
+let lastResult: SearchResult[] | null = null;
 
 self.api = {
     async init() {
@@ -56,13 +63,28 @@ self.api = {
         return format(config, results, registry, short);
     },
 
-    async search(query, count) {
+    async search(query, count, page) {
         AssertConfig(config);
 
         const [index, registry] = await load();
-        const result = search(config, index, query, count, true);
 
-        return format(config, result, registry, long);
+        let result: SearchResult[];
+
+        if (lastQuery === query && lastResult) {
+            result = lastResult;
+        } else {
+            result = search(config, index, query, MAX_COUNT_RESULT, true);
+
+            lastQuery = query;
+            lastResult = result;
+        }
+
+        const {items, total} = paginateResult(result, count, page);
+
+        return {
+            items: format(config, items, registry, long),
+            total,
+        };
     },
 } as ISearchWorkerApi;
 

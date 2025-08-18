@@ -126,3 +126,19 @@ function remap(dl: number, positions: Position[], length: number): Position[] {
         .map(([start, end]) => [start - dl, end - dl])
         .filter(([start]) => start >= 0 && start <= length) as [number, number][];
 }
+
+export interface SearchData {
+    items: SearchResult[];
+    total: number;
+}
+
+export function paginateResult(result: SearchResult[], count: number, page: number): SearchData {
+    const total = result?.length;
+    const start = (page - 1) * count;
+    const end = page * count;
+
+    return {
+        items: result.slice(start, end),
+        total,
+    };
+}
