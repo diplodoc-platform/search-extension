@@ -42,7 +42,8 @@ let config: WorkerConfig | null = null;
 let index: Index | null = null;
 let registry: Registry | null = null;
 
-const queryCache: Map<string, SearchResult[]> = new Map();
+let lastQuery: string | null = null;
+let lastResult: SearchResult[] | null = null;
 
 self.api = {
     async init() {
@@ -67,12 +68,15 @@ self.api = {
 
         const [index, registry] = await load();
 
-        let result = queryCache.get(query) || [];
+        let result: SearchResult[];
 
-        if (!queryCache.has(query)) {
+        if (lastQuery === query && lastResult) {
+            result = lastResult;
+        } else {
             result = search(config, index, query, MAX_COUNT_RESULT, true);
 
-            queryCache.set(query, result);
+            lastQuery = query;
+            lastResult = result;
         }
 
         const {items, total} = paginateResult(result, count, page);
