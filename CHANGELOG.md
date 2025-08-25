@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/diplodoc-platform/search-extension/compare/v2.1.0...v3.0.0) (2025-08-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* Remove CLI extension bootstrap
+
+### Features
+
+* Remove CLI extension bootstrap ([6f5dcef](https://github.com/diplodoc-platform/search-extension/commit/6f5dcef2fe0f69e6424d7b3a5797b27e0301800d))
+
 ## [2.1.0](https://github.com/diplodoc-platform/search-extension/compare/v2.0.2...v2.1.0) (2025-08-18)
 
 
