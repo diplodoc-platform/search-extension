@@ -35,7 +35,6 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@diplodoc/cli": "^5.0.4",
     "@diplodoc/client": "^3.9.0",
     "@diplodoc/components": "^4.13.0",
     "@diplodoc/lint": "^1.1.3",
