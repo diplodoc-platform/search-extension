@@ -9,7 +9,7 @@ const SHORT_HEAD = 20;
 type Trimmer = (text: string, score: Score) => [string, Position[]];
 
 export function format(
-    {base, mark}: Pick<WorkerConfig, 'base' | 'mark'>,
+    {mark}: Pick<WorkerConfig, 'mark'>,
     results: SearchResult[],
     registry: Registry,
     trim: Trimmer,
@@ -18,7 +18,7 @@ export function format(
         const doc = registry[entry.ref];
         const item = {
             type: 'page',
-            link: `${base.replace(/\/?$/, '')}/${entry.ref.replace(/&\/?/, '')}`,
+            link: entry.ref.replace(/&\/?/, ''),
             title: doc.title,
             description: doc.content.slice(0, MAX_LENGTH),
         } as SearchSuggestPageItem;
