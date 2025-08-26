@@ -13,6 +13,7 @@ export interface WorkerConfig extends ISearchWorkerConfig {
         registry: string;
         language?: string;
     };
+    skipHtmlExtension?: boolean;
 }
 
 export type Position = [number, number];

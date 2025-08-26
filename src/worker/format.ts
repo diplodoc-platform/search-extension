@@ -8,17 +8,40 @@ const SHORT_HEAD = 20;
 
 type Trimmer = (text: string, score: Score) => [string, Position[]];
 
+export function prettifyLink(href: string): string {
+    const filename = href.split('/').pop() ?? '';
+
+    let prettyFilename = filename;
+
+    if (filename === 'index.html' || filename === 'index') {
+        prettyFilename = '';
+    } else if (filename.endsWith('.html')) {
+        prettyFilename = filename.slice(0, -5);
+    } else {
+        prettyFilename = filename;
+    }
+
+    if (prettyFilename === '') {
+        return href.replace(/[^/]+$/, '');
+    } else {
+        return href.replace(/[^/]+$/, prettyFilename);
+    }
+}
+
 export function format(
-    {base, mark}: Pick<WorkerConfig, 'base' | 'mark'>,
+    {base, mark, skipHtmlExtension}: Pick<WorkerConfig, 'base' | 'mark' | 'skipHtmlExtension'>,
     results: SearchResult[],
     registry: Registry,
     trim: Trimmer,
 ): SearchSuggestPageItem[] {
     return results.map((entry) => {
         const doc = registry[entry.ref];
+        const link = `${base.replace(/\/?$/, '')}/${entry.ref.replace(/&\/?/, '')}`;
+        const prettyLink = skipHtmlExtension ? prettifyLink(link) : link;
+
         const item = {
             type: 'page',
-            link: `${base.replace(/\/?$/, '')}/${entry.ref.replace(/&\/?/, '')}`,
+            link: prettyLink,
             title: doc.title,
             description: doc.content.slice(0, MAX_LENGTH),
         } as SearchSuggestPageItem;
