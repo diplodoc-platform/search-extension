@@ -4,6 +4,10 @@
   "description": "Lunr based offline search extension for Diplodoc platform",
   "main": "./lib/provider/index.js",
   "types": "./lib/indexer/index.d.ts",
+  "engines": {
+    "node": ">=22",
+    "npm": ">=11.5.1"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:diplodoc-platform/search-extension.git"
