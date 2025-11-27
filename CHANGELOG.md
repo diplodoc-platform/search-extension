@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/diplodoc-platform/search-extension/compare/v3.0.0...v3.0.1) (2025-11-27)
+
+
+### Dependency update
+
+* update components and client ([3671656](https://github.com/diplodoc-platform/search-extension/commit/3671656fc836a55209010bd729e8e68b97f24a5c))
+
 ## [3.0.0](https://github.com/diplodoc-platform/search-extension/compare/v2.1.0...v3.0.0) (2025-08-25)
 
 
