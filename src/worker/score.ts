@@ -148,7 +148,7 @@ export function phrased(result: Index.Result, terms: string[]) {
 }
 
 function get<F extends string>(field: F) {
-    return function <T extends {[prop in F]: unknown}>(object: T) {
+    return function <T extends {[_prop in F]: unknown}>(object: T) {
         return object[field];
     };
 }

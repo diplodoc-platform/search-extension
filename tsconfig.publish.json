@@ -4,5 +4,14 @@
     "baseUrl": "./src",
     "outDir": "./lib"
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "test",
+    "**/__tests__/**",
+    "**/__snapshots__/**",
+    "**/*.test.*",
+    "**/*.spec.*"
+  ]
 }

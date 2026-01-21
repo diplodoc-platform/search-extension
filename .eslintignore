@@ -17,3 +17,8 @@ node_modules
 /src/worker/langs/*
 
 /external
+.lintstagedrc.js
+.eslintrc.js
+.prettierrc.js
+.stylelintrc.js
+esbuild/**/*.mjs

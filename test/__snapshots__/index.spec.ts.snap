@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`suggest should format very long result 1`] = `
+exports[`suggest > should format very long result 1`] = `
 Array [
   "
     <a href=\\"./8\\">
@@ -11,7 +11,7 @@ Array [
 ]
 `;
 
-exports[`suggest should match code 1`] = `
+exports[`suggest > should match code 1`] = `
 Array [
   "
     <a href=\\"./7\\">
@@ -22,7 +22,7 @@ Array [
 ]
 `;
 
-exports[`suggest should match html content 1`] = `
+exports[`suggest > should match html content 1`] = `
 Array [
   "
     <a href=\\"./1\\">
@@ -33,7 +33,7 @@ Array [
 ]
 `;
 
-exports[`suggest should match title content 1`] = `
+exports[`suggest > should match title content 1`] = `
 Array [
   "
     <a href=\\"./3\\">
@@ -50,7 +50,7 @@ Array [
 ]
 `;
 
-exports[`suggest should score longest phrase 1`] = `
+exports[`suggest > should score longest phrase 1`] = `
 Array [
   "
     <a href=\\"./6\\">

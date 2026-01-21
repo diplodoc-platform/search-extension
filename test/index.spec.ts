@@ -2,6 +2,8 @@ import type {Index} from 'lunr';
 import type {Registry, WorkerConfig} from '../src/types';
 import type {SearchSuggestPageItem} from '@diplodoc/components';
 
+import {beforeEach, describe, expect, it} from 'vitest';
+
 import {Indexer, ReleaseFormat} from '../src/indexer';
 import {search} from '../src/worker/search';
 import {format, short} from '../src/worker/format';
