@@ -1,4 +1,4 @@
-import esbuild from 'esbuild';
+import {build} from '@diplodoc/lint/esbuild';
 import {TsconfigPathsPlugin} from '@esbuild-plugins/tsconfig-paths';
 
 import {indexer, worker} from './langs.mjs';
@@ -10,7 +10,7 @@ const common = {
 
 await indexer('src/indexer/langs');
 
-esbuild.build({
+build({
     ...common,
     target: 'node18',
     packages: 'external',
@@ -23,7 +23,7 @@ esbuild.build({
     ],
 });
 
-esbuild.build({
+build({
     ...common,
     target: 'ES6',
     platform: 'browser',
@@ -31,7 +31,7 @@ esbuild.build({
     entryPoints: ['src/worker/index.ts'],
 });
 
-esbuild.build({
+build({
     ...common,
     target: 'ES6',
     format: 'cjs',
