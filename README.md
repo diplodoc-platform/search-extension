@@ -41,3 +41,7 @@ Extends search score algorithm:
 - Adds `confidence` behavior.
   `phrased` - default. Additionally scores results by found phrase length
   `sparsed` - Uses default lunr scoring algorithm.
+
+## Documentation
+
+- **For AI agents and developers** — see [AGENTS.md](AGENTS.md) for setup, scripts, and contribution notes.
