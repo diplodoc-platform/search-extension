@@ -16,9 +16,10 @@
     "build": "npm run build:clean && npm run build:code",
     "build:code": "node esbuild/build.mjs && tsc --emitDeclarationOnly -p tsconfig.publish.json",
     "build:clean": "node scripts/clean.mjs",
-    "prepublishOnly": "npm run lint && npm test && npm run build",
+    "prepublishOnly": "npm run typecheck && npm run lint && npm test && npm run build",
     "test": "node scripts/codegen.mjs && vitest run --config vitest.config.mjs",
     "test:watch": "node scripts/codegen.mjs && vitest --config vitest.config.mjs",
+    "test:coverage": "node scripts/codegen.mjs && vitest run --config vitest.config.mjs --coverage",
     "typecheck": "node scripts/codegen.mjs && tsc -p tsconfig.json --noEmit",
     "lint": "lint update && lint",
     "lint:fix": "lint update && lint fix",
@@ -46,16 +47,18 @@
   "devDependencies": {
     "@diplodoc/client": "^5.0.0",
     "@diplodoc/components": "^5.0.0",
-    "@diplodoc/lint": "^1.12.0",
+    "@diplodoc/lint": "^1.14.1",
     "@diplodoc/tsconfig": "^1.0.2",
     "@esbuild-plugins/tsconfig-paths": "^0.1.2",
     "@types/lunr": "^2.3.7",
     "@types/node": "^22.19.7",
+    "@vitest/coverage-v8": "^3.2.4",
     "ts-dedent": "^2.2.0",
     "typescript": "^5.6.3",
     "vitest": "^3.2.4"
   },
   "dependencies": {
+    "he": "^1.2.0",
     "lunr": "^2.3.9",
     "lunr-languages": "^1.14.0",
     "node-html-parser": "^6.1.13"
