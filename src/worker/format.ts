@@ -79,7 +79,7 @@ export function long(text: string, score: Score): [string, Position[]] {
     result = result.trimStart();
     head -= length - result.length;
 
-    return [result, remap(head, positions, result.length)];
+    return [result, remap(positions[0][0] - head, positions, result.length)];
 
     function prepend() {
         if (befores.length) {
