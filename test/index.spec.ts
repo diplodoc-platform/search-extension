@@ -1,12 +1,13 @@
 import type {Index} from 'lunr';
 import type {Registry, WorkerConfig} from '../src/types';
 import type {SearchSuggestPageItem} from '@diplodoc/components';
+import type {Score} from '../src/worker/score';
 
 import {beforeEach, describe, expect, it} from 'vitest';
 
 import {Indexer, ReleaseFormat} from '../src/indexer';
 import {search} from '../src/worker/search';
-import {format, short} from '../src/worker/format';
+import {format, long, short} from '../src/worker/format';
 
 const Lorem = [
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -98,5 +99,94 @@ describe('suggest', () => {
         const config = {confidence: 'phrased', tolerance: 0} as const;
 
         expect(suggest('Lorem ipsum', config)).toMatchSnapshot();
+    });
+});
+
+describe('long', () => {
+    it('should correctly remap positions when text is trimmed', () => {
+        const text =
+            'Prefix text before the match. '.repeat(5) +
+            'TARGET_WORD is here in the middle. ' +
+            'Suffix text after the match. '.repeat(5);
+
+        const targetStart = text.indexOf('TARGET_WORD');
+        const targetEnd = targetStart + 'TARGET_WORD'.length;
+
+        const score: Score = {
+            positions: [[targetStart, targetEnd]],
+            score: 10,
+            position: [targetStart, targetEnd],
+        };
+
+        const [result, positions] = long(text, score);
+
+        expect(result.length).toBeLessThanOrEqual(200);
+
+        expect(positions.length).toBeGreaterThan(0);
+
+        const [start, end] = positions[0];
+        const highlighted = result.slice(start, end);
+
+        expect(highlighted).toBe('TARGET_WORD');
+    });
+
+    it('should handle positions at the beginning of text', () => {
+        const text = 'START_WORD ' + 'some filler text. '.repeat(20);
+
+        const score: Score = {
+            positions: [[0, 10]],
+            score: 10,
+            position: [0, 10],
+        };
+
+        const [result, positions] = long(text, score);
+
+        expect(positions.length).toBeGreaterThan(0);
+        const [start, end] = positions[0];
+        expect(result.slice(start, end)).toBe('START_WORD');
+    });
+
+    it('should return original text and positions if text is shorter than MAX_LENGTH', () => {
+        const text = 'Short text with KEYWORD inside';
+        const keywordStart = text.indexOf('KEYWORD');
+        const keywordEnd = keywordStart + 'KEYWORD'.length;
+
+        const score: Score = {
+            positions: [[keywordStart, keywordEnd]],
+            score: 10,
+            position: [keywordStart, keywordEnd],
+        };
+
+        const [result, positions] = long(text, score);
+
+        expect(result).toBe(text);
+        expect(positions).toEqual([[keywordStart, keywordEnd]]);
+    });
+
+    it('should correctly handle multiple positions', () => {
+        const text =
+            'First MATCH here. '.repeat(3) +
+            'Second MATCH here. '.repeat(3) +
+            'More text to make it long enough. '.repeat(5);
+
+        const firstMatchStart = text.indexOf('MATCH');
+        const firstMatchEnd = firstMatchStart + 'MATCH'.length;
+
+        const score: Score = {
+            positions: [
+                [firstMatchStart, firstMatchEnd],
+                [firstMatchStart + 18, firstMatchStart + 18 + 5], // Второй MATCH
+            ],
+            score: 10,
+            position: [firstMatchStart, firstMatchEnd],
+        };
+
+        const [result, positions] = long(text, score);
+
+        expect(positions.length).toBeGreaterThan(0);
+
+        const [start, end] = positions[0];
+
+        expect(result.slice(start, end)).toBe('MATCH');
     });
 });
