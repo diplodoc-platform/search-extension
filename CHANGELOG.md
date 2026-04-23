@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.3](https://github.com/diplodoc-platform/search-extension/compare/v3.0.2...v3.0.3) (2026-04-23)
+
+
+### Bug Fixes
+
+* fix highlighte search ([37902c8](https://github.com/diplodoc-platform/search-extension/commit/37902c8b91b741868aa082ca9d840d3792c80219))
+* fix highlighte search ([01c9c72](https://github.com/diplodoc-platform/search-extension/commit/01c9c72aaf9ffac5839195027d3c34816243a87d))
+
 ## [3.0.2](https://github.com/diplodoc-platform/search-extension/compare/v3.0.1...v3.0.2) (2026-03-04)
 
 
