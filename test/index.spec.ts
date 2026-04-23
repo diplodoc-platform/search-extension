@@ -100,6 +100,16 @@ describe('suggest', () => {
 
         expect(suggest('Lorem ipsum', config)).toMatchSnapshot();
     });
+
+    it('should escape HTML in suggest output from a markdown heading', () => {
+        add('', "### Test <img src=x onerror=alert('Alert')>");
+
+        const config = {confidence: 'phrased', tolerance: 2} as const;
+        const results = suggest('Test', config).join('');
+
+        expect(results).not.toContain("<img src=x onerror=alert('Alert')>");
+        expect(results).toContain("&lt;img src=x onerror=alert('Alert')&gt;");
+    });
 });
 
 describe('long', () => {

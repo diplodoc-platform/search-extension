@@ -8,6 +8,10 @@ const SHORT_HEAD = 20;
 
 type Trimmer = (text: string, score: Score) => [string, Position[]];
 
+export function escapeHTML(str: string) {
+    return str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 export function format(
     {base, mark}: Pick<WorkerConfig, 'base' | 'mark'>,
     results: SearchResult[],
@@ -106,11 +110,16 @@ export function long(text: string, score: Score): [string, Position[]] {
 }
 
 function highlighte(mark: string, text: string, positions: Position[]) {
-    return positions.reduceRight((result, position) => {
-        const [before, content, after] = split(result, position);
-
-        return `${before}<span class="${mark}">${content}</span>${after}`;
-    }, text);
+    return (
+        positions.reduce((accumulator, [from, to], index) => {
+            const prevTo = index === 0 ? 0 : positions[index - 1][1];
+            return (
+                accumulator +
+                escapeHTML(text.slice(prevTo, from)) +
+                `<span class="${mark}">${escapeHTML(text.slice(from, to))}</span>`
+            );
+        }, '') + escapeHTML(text.slice(positions.length ? positions[positions.length - 1][1] : 0))
+    );
 }
 
 function split(text: string, position: Position) {
