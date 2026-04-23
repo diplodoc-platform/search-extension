@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.4](https://github.com/diplodoc-platform/search-extension/compare/v3.0.3...v3.0.4) (2026-04-23)
+
+
+### Bug Fixes
+
+* fixed node version ([e3aef07](https://github.com/diplodoc-platform/search-extension/commit/e3aef0775e771cf630a6c8abc63bb7f178bf2554))
+* fixed node version ([651a4ee](https://github.com/diplodoc-platform/search-extension/commit/651a4ee69c6dbaba9dd071cea6d4e8da1e94d749))
+
 ## [3.0.3](https://github.com/diplodoc-platform/search-extension/compare/v3.0.2...v3.0.3) (2026-04-23)
 
 
