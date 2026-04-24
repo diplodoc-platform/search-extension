@@ -101,7 +101,7 @@ describe('suggest', () => {
         expect(suggest('Lorem ipsum', config)).toMatchSnapshot();
     });
 
-    it('should escape HTML in suggest output from a markdown heading', () => {
+    it('should escape HTML in suggest output from a markdown heading.', () => {
         add('', "### Test <img src=x onerror=alert('Alert')>");
 
         const config = {confidence: 'phrased', tolerance: 2} as const;
