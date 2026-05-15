@@ -1,4 +1,4 @@
-import {build} from '@diplodoc/lint/esbuild';
+import {build} from '@diplodoc/infra/esbuild';
 import {TsconfigPathsPlugin} from '@esbuild-plugins/tsconfig-paths';
 
 import {indexer, worker} from './langs.mjs';
