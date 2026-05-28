@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.6](https://github.com/diplodoc-platform/search-extension/compare/v3.0.5...v3.0.6) (2026-05-28)
+
+
+### Bug Fixes
+
+* **deps:** updated node to 24 ([d3e8bee](https://github.com/diplodoc-platform/search-extension/commit/d3e8bee736a42ce97da0fb642e5a69dddd58da81))
+
 ## [3.0.5](https://github.com/diplodoc-platform/search-extension/compare/v3.0.4...v3.0.5) (2026-04-24)
 
 
