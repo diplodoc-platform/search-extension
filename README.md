@@ -1,12 +1,15 @@
-# Diplodoc search extension
+**english** | [русский](https://github.com/diplodoc-platform/search-extension/blob/master/README.ru.md)
+
+---
 
 [![NPM version](https://img.shields.io/npm/v/@diplodoc/search-extension.svg?style=flat)](https://www.npmjs.org/package/@diplodoc/search-extension)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_search-extension&metric=alert_status)](https://sonarcloud.io/summary/overall?id=diplodoc-platform_search-extension)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_search-extension&metric=coverage)](https://sonarcloud.io/summary/overall?id=diplodoc-platform_search-extension)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_search-extension&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=diplodoc-platform_search-extension)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_search-extension&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=diplodoc-platform_search-extension)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_search-extension&metric=security_rating)](https://sonarcloud.io/summary/overall?id=diplodoc-platform_search-extension)
-[![Tests](https://github.com/diplodoc-platform/search-extension/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/diplodoc-platform/search-extension/actions/workflows/tests.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_search-extension&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=diplodoc-platform_search-extension)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_search-extension&metric=coverage)](https://sonarcloud.io/summary/new_code?id=diplodoc-platform_search-extension)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_search-extension&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=diplodoc-platform_search-extension)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_search-extension&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=diplodoc-platform_search-extension)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=diplodoc-platform_search-extension&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=diplodoc-platform_search-extension)
+
+# Diplodoc search extension
 
 This is an extension of the Diplodoc platform, which adds offline search functionality.
 It uses [lunr](https://lunrjs.com/) search
