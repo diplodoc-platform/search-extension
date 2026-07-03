@@ -48,7 +48,6 @@
   "devDependencies": {
     "@diplodoc/client": "^5.0.0",
     "@diplodoc/components": "^5.0.0",
-    "@diplodoc/tsconfig": "^1.0.2",
     "@esbuild-plugins/tsconfig-paths": "^0.1.2",
     "@types/lunr": "^2.3.7",
     "@types/node": "^22.19.7",
