@@ -46,16 +46,16 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@diplodoc/client": "^5.0.0",
-    "@diplodoc/components": "^5.0.0",
+    "@diplodoc/client": "^5.10.0",
+    "@diplodoc/components": "^5.17.2",
+    "@diplodoc/infra": "2.2.1",
     "@esbuild-plugins/tsconfig-paths": "^0.1.2",
     "@types/lunr": "^2.3.7",
     "@types/node": "^22.19.7",
     "@vitest/coverage-v8": "^3.2.4",
     "ts-dedent": "^2.2.0",
     "typescript": "^5.6.3",
-    "vitest": "^3.2.4",
-    "@diplodoc/infra": "2.2.1"
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "he": "^1.2.0",
