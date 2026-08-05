@@ -48,7 +48,7 @@ export class Indexer {
     getTags(lang: string) {
         const tags = Object.values(this.docs[lang] || {}).flatMap((document) => document.tags);
 
-        return [...new Set(tags)].sort();
+        return [...new Set(tags)].sort((left, right) => left.localeCompare(right));
     }
 
     /**
