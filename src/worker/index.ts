@@ -12,6 +12,7 @@ import lunr, {Index} from 'lunr';
 
 import {search} from './search';
 import {format, long, paginateResult, short} from './format';
+import {createRegistryResults, filterResultsByTags} from './tags';
 
 export {WorkerConfig};
 
@@ -63,14 +64,16 @@ self.api = {
         return format(config, results, registry, short);
     },
 
-    async search(query, count, page) {
+    async search(query, count, page, tags = []) {
         AssertConfig(config);
 
         const [index, registry] = await load();
 
         let result: SearchResult[];
 
-        if (lastQuery === query && lastResult) {
+        if (!query.trim()) {
+            result = createRegistryResults(registry);
+        } else if (lastQuery === query && lastResult) {
             result = lastResult;
         } else {
             result = search(config, index, query, MAX_COUNT_RESULT, true);
@@ -79,7 +82,8 @@ self.api = {
             lastResult = result;
         }
 
-        const {items, total} = paginateResult(result, count, page);
+        const filteredResult = filterResultsByTags(result, registry, tags);
+        const {items, total} = paginateResult(filteredResult, count, page);
 
         return {
             items: format(config, items, registry, long),

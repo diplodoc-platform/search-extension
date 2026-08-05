@@ -18,6 +18,7 @@ type DocumentInfo = {
     title: string;
     content: string;
     keywords: string[];
+    tags: string[];
 };
 
 type EntryInfo = {
@@ -28,6 +29,7 @@ type EntryInfo = {
         noIndex?: boolean;
         noindex?: boolean;
         keywords?: string[];
+        tags?: string[];
     };
 };
 
@@ -41,6 +43,12 @@ export class Indexer {
      */
     get langs() {
         return Object.keys(this.indices);
+    }
+
+    getTags(lang: string) {
+        const tags = Object.values(this.docs[lang] || {}).flatMap((document) => document.tags);
+
+        return [...new Set(tags)].sort();
     }
 
     /**
@@ -66,8 +74,9 @@ export class Indexer {
 
         const content = html2text(data.html || '');
         const keywords = meta.keywords || [];
+        const tags = (meta.tags || []).filter((tag) => !tag.startsWith('_'));
 
-        this.docs[lang][url] = {title, content, keywords};
+        this.docs[lang][url] = {title, content, keywords, tags};
         this.indices[lang].add({
             ...this.docs[lang][url],
             url,

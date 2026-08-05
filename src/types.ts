@@ -23,6 +23,7 @@ export type IndexDocument = {
     content: string;
     breadcrumbs?: string[];
     keywords?: string[];
+    tags?: string[];
 };
 
 export type Registry = Record<string, IndexDocument>;
