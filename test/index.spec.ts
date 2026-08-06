@@ -8,6 +8,7 @@ import {beforeEach, describe, expect, it} from 'vitest';
 import {Indexer, ReleaseFormat} from '../src/indexer';
 import {search} from '../src/worker/search';
 import {format, long, short} from '../src/worker/format';
+import {createRegistryResults, filterResultsByTags} from '../src/worker/tags';
 
 const Lorem = [
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -198,5 +199,91 @@ describe('long', () => {
         const [start, end] = positions[0];
 
         expect(result.slice(start, end)).toBe('MATCH');
+    });
+});
+
+describe('tags', () => {
+    const registry: Registry = {
+        'info.html': {
+            url: 'info.html',
+            title: 'Info',
+            content: '',
+            tags: ['info'],
+        },
+        'syntax.html': {
+            url: 'syntax.html',
+            title: 'Syntax',
+            content: '',
+            tags: ['syntax', 'reference'],
+        },
+        'other.html': {
+            url: 'other.html',
+            title: 'Other',
+            content: '',
+            tags: ['other'],
+        },
+    };
+
+    it('creates a result for every indexed article', () => {
+        expect(createRegistryResults(registry).map(({ref}) => ref)).toEqual([
+            'info.html',
+            'syntax.html',
+            'other.html',
+        ]);
+    });
+
+    it('matches articles by any selected tag', () => {
+        const results = createRegistryResults(registry);
+
+        expect(
+            filterResultsByTags(results, registry, ['info', 'reference']).map(({ref}) => ref),
+        ).toEqual(['info.html', 'syntax.html']);
+    });
+
+    it('keeps all results when no tags are selected', () => {
+        const results = createRegistryResults(registry);
+
+        expect(filterResultsByTags(results, registry, [])).toEqual(results);
+    });
+
+    it('returns no results for an unknown tag', () => {
+        const results = createRegistryResults(registry);
+
+        expect(filterResultsByTags(results, registry, ['unknown'])).toEqual([]);
+    });
+
+    it('collects unique tags for a language', () => {
+        const indexer = new Indexer();
+
+        indexer.add('ru', 'info.html', {
+            title: 'Info',
+            html: '',
+            meta: {tags: ['syntax', '_internal', 'info']},
+        });
+        indexer.add('ru', 'syntax.html', {
+            title: 'Syntax',
+            html: '',
+            meta: {tags: ['syntax']},
+        });
+
+        expect(indexer.getTags('ru')).toEqual(['info', 'syntax']);
+    });
+
+    it('does not store technical tags in the registry', () => {
+        const indexer = new Indexer();
+
+        indexer.add('ru', 'info.html', {
+            title: 'Info',
+            html: '',
+            meta: {tags: ['info', '_internal']},
+        });
+
+        const {registry} = indexer.release('ru', ReleaseFormat.RAW);
+
+        if (typeof registry === 'string') {
+            throw new Error('Expected raw registry');
+        }
+
+        expect(registry['info.html'].tags).toEqual(['info']);
     });
 });
