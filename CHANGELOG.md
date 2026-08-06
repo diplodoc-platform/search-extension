@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.1.0](https://github.com/diplodoc-platform/search-extension/compare/v3.0.7...v3.1.0) (2026-08-06)
+
+
+### Features
+
+* added page tags ([#70](https://github.com/diplodoc-platform/search-extension/issues/70)) ([071108e](https://github.com/diplodoc-platform/search-extension/commit/071108e0caf58b770f467d261d954c0404b16c55))
+
+
+### Bug Fixes
+
+* **deps:** Update dev:@diplodoc/client@5.11.0, dev:@diplodoc/components@5.18.1 ([#71](https://github.com/diplodoc-platform/search-extension/issues/71)) ([84870b2](https://github.com/diplodoc-platform/search-extension/commit/84870b2d168cb62eb2844ba8d25a1b1d74bdddf6))
+
 ## [3.0.7](https://github.com/diplodoc-platform/search-extension/compare/v3.0.6...v3.0.7) (2026-07-28)
 
 
