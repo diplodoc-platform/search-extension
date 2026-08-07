@@ -46,7 +46,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@diplodoc/client": "^5.11.0",
+    "@diplodoc/client": "^5.11.2",
     "@diplodoc/components": "^5.18.2",
     "@diplodoc/infra": "2.2.3",
     "@esbuild-plugins/tsconfig-paths": "^0.1.2",
