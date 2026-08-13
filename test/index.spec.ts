@@ -246,6 +246,12 @@ describe('tags', () => {
         expect(filterResultsByTags(results, registry, [])).toEqual(results);
     });
 
+    it('ignores non-public selected tags', () => {
+        const results = createRegistryResults(registry);
+
+        expect(filterResultsByTags(results, registry, ['_internal'])).toEqual(results);
+    });
+
     it('returns no results for an unknown tag', () => {
         const results = createRegistryResults(registry);
 

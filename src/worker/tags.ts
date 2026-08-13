@@ -18,11 +18,11 @@ export function filterResultsByTags(
     registry: Registry,
     tags: string[],
 ): SearchResult[] {
-    if (!tags.length) {
+    const selectedTags = new Set(tags.filter((tag) => !tag.startsWith('_')));
+
+    if (!selectedTags.size) {
         return results;
     }
-
-    const selectedTags = new Set(tags);
 
     return results.filter(({ref}) => registry[ref]?.tags?.some((tag) => selectedTags.has(tag)));
 }
