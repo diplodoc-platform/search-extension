@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.1](https://github.com/diplodoc-platform/search-extension/compare/v3.1.0...v3.1.1) (2026-08-13)
+
+
+### Bug Fixes
+
+* fixed tags ([#75](https://github.com/diplodoc-platform/search-extension/issues/75)) ([4dcf932](https://github.com/diplodoc-platform/search-extension/commit/4dcf93214f0bca38f7a091408fb42b0a479be8f4))
+
 ## [3.1.0](https://github.com/diplodoc-platform/search-extension/compare/v3.0.7...v3.1.0) (2026-08-06)
 
 
