@@ -26,3 +26,22 @@ export function filterResultsByTags(
 
     return results.filter(({ref}) => registry[ref]?.tags?.some((tag) => selectedTags.has(tag)));
 }
+
+export function countResultsByTag(
+    results: SearchResult[],
+    registry: Registry,
+): Record<string, number> {
+    const counts = new Map<string, number>();
+
+    for (const {ref} of results) {
+        const tags = new Set(registry[ref]?.tags || []);
+
+        for (const tag of tags) {
+            if (!tag.startsWith('_')) {
+                counts.set(tag, (counts.get(tag) || 0) + 1);
+            }
+        }
+    }
+
+    return Object.fromEntries(counts);
+}

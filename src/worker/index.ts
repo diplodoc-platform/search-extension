@@ -12,7 +12,7 @@ import lunr, {Index} from 'lunr';
 
 import {search} from './search';
 import {format, long, paginateResult, short} from './format';
-import {createRegistryResults, filterResultsByTags} from './tags';
+import {countResultsByTag, createRegistryResults, filterResultsByTags} from './tags';
 
 export {WorkerConfig};
 
@@ -88,6 +88,10 @@ self.api = {
         return {
             items: format(config, items, registry, long),
             total,
+            tagCounts:
+                !query.trim() || result.length < MAX_COUNT_RESULT
+                    ? countResultsByTag(result, registry)
+                    : undefined,
         };
     },
 } as ISearchWorkerApi;

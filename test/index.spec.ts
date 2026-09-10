@@ -8,7 +8,7 @@ import {beforeEach, describe, expect, it} from 'vitest';
 import {Indexer, ReleaseFormat} from '../src/indexer';
 import {search} from '../src/worker/search';
 import {format, long, short} from '../src/worker/format';
-import {createRegistryResults, filterResultsByTags} from '../src/worker/tags';
+import {countResultsByTag, createRegistryResults, filterResultsByTags} from '../src/worker/tags';
 
 const Lorem = [
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -291,5 +291,27 @@ describe('tags', () => {
         }
 
         expect(registry['info.html'].tags).toEqual(['info']);
+    });
+});
+
+describe('tag result counts', () => {
+    it('counts matching documents once per public tag before pagination and filtering', () => {
+        const registry: Registry = {
+            first: {url: 'first', title: 'First', content: '', tags: ['info', 'info', '_private']},
+            second: {url: 'second', title: 'Second', content: '', tags: ['info', 'meta']},
+            third: {url: 'third', title: 'Third', content: '', tags: ['guide']},
+        };
+        const results = createRegistryResults(registry).slice(0, 2);
+
+        expect(countResultsByTag(results, registry)).toEqual({info: 2, meta: 1});
+        expect(countResultsByTag([], registry)).toEqual({});
+    });
+
+    it('ignores documents without tags', () => {
+        const registry: Registry = {
+            untagged: {url: 'untagged', title: 'Untagged', content: ''},
+        };
+
+        expect(countResultsByTag(createRegistryResults(registry), registry)).toEqual({});
     });
 });
