@@ -306,4 +306,12 @@ describe('tag result counts', () => {
         expect(countResultsByTag(results, registry)).toEqual({info: 2, meta: 1});
         expect(countResultsByTag([], registry)).toEqual({});
     });
+
+    it('ignores documents without tags', () => {
+        const registry: Registry = {
+            untagged: {url: 'untagged', title: 'Untagged', content: ''},
+        };
+
+        expect(countResultsByTag(createRegistryResults(registry), registry)).toEqual({});
+    });
 });
