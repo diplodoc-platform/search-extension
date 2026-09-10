@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.2](https://github.com/diplodoc-platform/search-extension/compare/v3.1.1...v3.1.2) (2026-09-10)
+
+
+### Bug Fixes
+
+* count local search results by tag ([#78](https://github.com/diplodoc-platform/search-extension/issues/78)) ([15730a3](https://github.com/diplodoc-platform/search-extension/commit/15730a39087a1b1ef8b3b435bc0d7bcd37de3678))
+
 ## [3.1.1](https://github.com/diplodoc-platform/search-extension/compare/v3.1.0...v3.1.1) (2026-08-13)
 
 
