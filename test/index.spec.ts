@@ -113,6 +113,28 @@ describe('suggest', () => {
     });
 });
 
+describe('format', () => {
+    it('should escape fields without highlights', () => {
+        const registry: Registry = {
+            'unsafe.html': {
+                url: 'unsafe.html',
+                title: '<img src=x onerror=alert(1)>',
+                content: '<svg onload=alert(2)>',
+            },
+        };
+
+        const [result] = format(
+            {base: './', mark: 'mark'},
+            createRegistryResults(registry),
+            registry,
+            long,
+        );
+
+        expect(result.title).toBe('&lt;img src=x onerror=alert(1)&gt;');
+        expect(result.description).toBe('&lt;svg onload=alert(2)&gt;');
+    });
+});
+
 describe('long', () => {
     it('should correctly remap positions when text is trimmed', () => {
         const text =

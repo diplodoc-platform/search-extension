@@ -23,8 +23,8 @@ export function format(
         const item = {
             type: 'page',
             link: `${base.replace(/\/?$/, '')}/${entry.ref.replace(/&\/?/, '')}`,
-            title: doc.title,
-            description: doc.content.slice(0, MAX_LENGTH),
+            title: escapeHTML(doc.title),
+            description: escapeHTML(doc.content.slice(0, MAX_LENGTH)),
         } as SearchSuggestPageItem;
 
         const fields = entry.scores;
