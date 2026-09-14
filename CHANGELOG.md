@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.3](https://github.com/diplodoc-platform/search-extension/compare/v3.1.2...v3.1.3) (2026-09-14)
+
+
+### Bug Fixes
+
+* escape search result html ([#80](https://github.com/diplodoc-platform/search-extension/issues/80)) ([501e76d](https://github.com/diplodoc-platform/search-extension/commit/501e76dadb9eade64cfffaa5f47da19eb7417883))
+
 ## [3.1.2](https://github.com/diplodoc-platform/search-extension/compare/v3.1.1...v3.1.2) (2026-09-10)
 
 
