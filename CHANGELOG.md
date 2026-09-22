@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.4](https://github.com/diplodoc-platform/search-extension/compare/v3.1.3...v3.1.4) (2026-09-22)
+
+
+### Bug Fixes
+
+* **deps:** Update dev:@diplodoc/components@5.23.2 ([887d3e3](https://github.com/diplodoc-platform/search-extension/commit/887d3e3e3912e1caffa8ba43d4700ea463a3b41e))
+
 ## [3.1.3](https://github.com/diplodoc-platform/search-extension/compare/v3.1.2...v3.1.3) (2026-09-14)
 
 
